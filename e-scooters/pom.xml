@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.kkorchyts.e-scooters</groupId>
+    <artifactId>e-scooter.parent</artifactId>
+    <version>1.0</version>
+    <packaging>pom</packaging>
+    <name>e-scooter</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>11</java.version>
+        <spring.version>5.2.9.RELEASE</spring.version>
+        <slf4j.version>1.7.30</slf4j.version>
+        <logback.version>1.0.13</logback.version>
+        <jackson.version>2.11.3</jackson.version>
+        <swagger.version>2.9.2</swagger.version>
+        <hibernate.version>5.4.23.Final</hibernate.version>
+        <security.version>5.3.5.RELEASE</security.version>
+        <junit-jupiter.version>5.5.2</junit-jupiter.version>
+        <junit.vintage.version>5.7.0</junit.vintage.version>
+        <jwt.version>1.0</jwt.version>
+        <dao.version>1.0</dao.version>
+        <dto.version>1.0</dto.version>
+        <domain.version>1.0</domain.version>
+        <config.version>1.0</config.version>
+        <strategies.version>1.0</strategies.version>
+        <restapi.version>1.0</restapi.version>
+        <service.version>1.0</service.version>
+    </properties>
+
+    <modules>
+        <module>restapi</module>
+        <module>config</module>
+        <module>jwt</module>
+        <module>dao</module>
+        <module>domain</module>
+        <module>service</module>
+        <module>dto</module>
+        <module>strategies</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <!-- logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- logging -->
+
+        <!-- Json -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <!-- end json -->
+
+        <!--Page, Pageable-->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-commons</artifactId>
+            <version>2.2.5.RELEASE</version>
+        </dependency>
+
+        <!-- PowerMock doesn't support @Test JUnit 5 and doesn't prepare Static classes, so we have to use @Test from JUnit4 https://github.com/powermock/powermock/issues/1030 -->
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <version>${junit.vintage.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.7.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>3.5.11</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- end uinit testing -->
+    </dependencies>
+
+    <build>
+        <finalName>servlets</finalName>
+        <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+            <plugins>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <configuration>
+                        <failOnMissingWebXml>false</failOnMissingWebXml>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.tomcat.maven</groupId>
+                    <artifactId>tomcat7-maven-plugin</artifactId>
+                    <version>2.2</version>
+                    <configuration>
+                        <webapps>
+                            <webapp>
+                                <groupId>com.kkorchyts.e-scooters</groupId>
+                                <artifactId>restapi</artifactId>
+                                <version>${restapi.version}</version>
+                                <type>war</type>
+                            </webapp>
+                        </webapps>
+                        <url>http://localhost:8081/manager/text</url>
+                        <server>TomcatServer</server>
+                        <path>/</path>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
